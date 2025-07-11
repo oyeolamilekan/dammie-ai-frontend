@@ -88,8 +88,8 @@ export function AddBankAccountForm({
                     <SelectValue placeholder="Banks" />
                   </SelectTrigger>
                   <SelectContent>
-                    {banks.map((bank) => (
-                      <SelectItem key={bank.code} value={bank.code}>
+                    {banks.map((bank, index) => (
+                      <SelectItem key={`${bank.code}-${index}`} value={bank.code}>
                         {bank.name}
                       </SelectItem>
                     ))}

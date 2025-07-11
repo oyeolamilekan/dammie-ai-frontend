@@ -2,15 +2,15 @@
 
 import { AddBankAccountForm } from '@/components/add-bank-account-form'
 import { GalleryVerticalEnd } from 'lucide-react'
-import React from 'react'
+import React, { use } from 'react'
 
-type Props = {
-  params: {
-    slug: string
-  }
+interface Props {
+  params: Promise<{ slug: string }>;
 }
 
-export default function Page({ params: { slug } }: Props) {
+export default function Page({ params }: Props) {
+  const { slug } = use(params);
+  
   return (
      <div className="bg-muted flex min-h-svh flex-col items-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
