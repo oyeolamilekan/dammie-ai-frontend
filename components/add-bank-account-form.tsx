@@ -15,15 +15,9 @@ import { useMutation } from "@tanstack/react-query";
 import { addBankAccount } from "@/endpoints/api";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import banks from "@/data/bank.json";
 import { useTelegramWebApp } from "@/hooks/use-telegram";
+import { Select } from "@/components/ui/select";
 
 interface LoginFormProps extends React.ComponentProps<"div"> {
   slug: string;
@@ -39,8 +33,8 @@ export function AddBankAccountForm({
   const { closeMiniApp } = useTelegramWebApp();
 
   const onSubmit = async (data: FieldValues) => {
-    const { bank, accountNumber } = data
-    mutate({ bank, accountNumber, slug })
+    const { bankCode, accountNumber } = data
+    mutate({ bankCode, accountNumber, slug })
   };
 
   const { isPending, mutate } = useMutation({
@@ -69,35 +63,46 @@ export function AddBankAccountForm({
             <div className="grid gap-6">
               <div className="grid gap-6">
                 <div className="grid gap-3">
-                  <Label htmlFor="email">Account Number</Label>
+                  <Label htmlFor="accountNumber">Account Number</Label>
                   <Input
-                    type="number"
+                    id="accountNumber"
+                    type="text"
                     placeholder="1234567890"
                     maxLength={10}
                     required
-                    {...register('email', {
-                      required: 'Email is required',
+                    {...register('accountNumber', {
+                      required: 'Account number is required',
                       pattern: {
-                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                        message: 'Please enter a valid email address',
+                        value: /^[0-9]{10,11}$/,
+                        message: 'Account number must be 10 digits only',
+                      },
+                      minLength: {
+                        value: 10,
+                        message: 'Account number must be at least 10 digits'
+                      },
+                      maxLength: {
+                        value: 11,
+                        message: 'Account number cannot exceed 10 digits'
+                      },
+                      validate: {
+                        numbersOnly: (value) =>
+                          /^[0-9]+$/.test(value) || 'Account number must contain only numbers',
+                        notAllSame: (value) =>
+                          !(/^(\d)\1+$/.test(value)) || 'Account number cannot be all the same digit'
                       }
                     })}
                   />
-                  <ErrorMessage message={errors.email?.message} />
+                  <ErrorMessage message={errors.accountNumber?.message} />
                 </div>
 
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Banks" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {banks.map((bank, index) => (
-                      <SelectItem key={`${bank.code}-${index}`} value={bank.code}>
-                        {bank.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Select 
+                  options={banks as []}
+                  required
+                  {...register('bankCode', {
+                    required: 'Bank code is required',
+                  })}
+                />
+                <ErrorMessage message={errors.bankCode?.message} />
 
                 <Button type="submit" className="w-full">
                   {isPending ? "Loading" : "Add Bank Account"}

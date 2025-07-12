@@ -10,7 +10,7 @@ interface CompleteAccountBody {
 }
 
 interface BankAccountBody {
-  bank: string;
+  bankCode: string;
   accountNumber: string;
   slug: string;
 }
