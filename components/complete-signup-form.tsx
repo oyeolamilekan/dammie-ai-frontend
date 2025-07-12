@@ -15,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { completeAccount } from "@/endpoints/api";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { useTelegramWebApp } from "@/hooks/use-telegram";
 
 interface LoginFormProps extends React.ComponentProps<"div"> {
   slug: string;
@@ -28,6 +29,8 @@ export function CompleteSignUpForm({
 
   const { register, handleSubmit, formState: { errors } } = useForm()
 
+  const { closeMiniApp } = useTelegramWebApp();
+
   const onSubmit = async (data: FieldValues) => {
     const { email, firstName, lastName, bvnNumber, transactionPin } = data
     mutate({ email, firstName, lastName, bvnNumber, transactionPin, slug }) // Replace "some-id" with actual user ID;
@@ -37,6 +40,7 @@ export function CompleteSignUpForm({
     mutationFn: completeAccount,
     onSuccess() {
       toast.success("Account created successfully!");
+      closeMiniApp();
     },
     onError(err: AxiosError<{ message: string }>) {
       const message = err.response?.data?.message || "Something went wrong.";

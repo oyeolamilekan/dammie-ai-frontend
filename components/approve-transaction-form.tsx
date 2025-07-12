@@ -15,6 +15,7 @@ import { useMutation } from '@tanstack/react-query';
 import { approveInstantSwap } from '@/endpoints/api';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
+import { useTelegramWebApp } from '@/hooks/use-telegram';
 
 
 interface ApproveTransactionFormProps extends React.ComponentProps<"div"> {
@@ -23,6 +24,8 @@ interface ApproveTransactionFormProps extends React.ComponentProps<"div"> {
 
 export function ApproveTransactionForm({ slug, className, ...props }: ApproveTransactionFormProps) {
   const { register, handleSubmit, formState: { errors } } = useForm()
+
+  const { closeMiniApp } = useTelegramWebApp();
 
   const onSubmit = async (data: FieldValues) => {
     const { code } = data
@@ -33,6 +36,7 @@ export function ApproveTransactionForm({ slug, className, ...props }: ApproveTra
     mutationFn: approveInstantSwap,
     onSuccess() {
       toast.success("Account created successfully!");
+      closeMiniApp();
     },
     onError(err: AxiosError<{ message: string }>) {
       const message = err.response?.data?.message || "Something went wrong.";

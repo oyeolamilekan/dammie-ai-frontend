@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import banks from "@/data/bank.json";
+import { useTelegramWebApp } from "@/hooks/use-telegram";
 
 interface LoginFormProps extends React.ComponentProps<"div"> {
   slug: string;
@@ -35,6 +36,7 @@ export function AddBankAccountForm({
 }: LoginFormProps) {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
+  const { closeMiniApp } = useTelegramWebApp();
 
   const onSubmit = async (data: FieldValues) => {
     const { bank, accountNumber } = data
@@ -45,6 +47,7 @@ export function AddBankAccountForm({
     mutationFn: addBankAccount,
     onSuccess() {
       toast.success("Account created successfully!");
+      closeMiniApp();
     },
     onError(err: AxiosError<{ message: string }>) {
       const message = err.response?.data?.message || "Something went wrong.";
