@@ -65,7 +65,7 @@ const TechStack = () => {
         {/* View Source Link */}
         <div className="text-center mt-12">
           <a
-            href="https://github.com"
+            href="https://github.com/oyeolamilekan/dammie-ai-frontend"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-black hover:text-muted-foreground transition-colors font-geometric font-semibold uppercase"
@@ -77,7 +77,7 @@ const TechStack = () => {
 
         <div className="text-center mt-12">
           <a
-            href="https://github.com"
+            href="https://github.com/oyeolamilekan/dammie-ai-backend"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-black hover:text-muted-foreground transition-colors font-geometric font-semibold uppercase"
