@@ -35,7 +35,7 @@ export function ApproveTransactionForm({ slug, className, ...props }: ApproveTra
   const { isPending, mutate } = useMutation({
     mutationFn: approveInstantSwap,
     onSuccess() {
-      toast.success("Account created successfully!");
+      toast.success("Swap successfully approved!");
       closeMiniApp();
     },
     onError(err: AxiosError<{ message: string }>) {
@@ -63,14 +63,10 @@ export function ApproveTransactionForm({ slug, className, ...props }: ApproveTra
                 maxLength={4}
                 required
                 {...register('code', {
-                  required: 'code is required',
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: 'Please enter a valid email address',
-                  }
+                  required: 'code is required'
                 })}
               />
-              <ErrorMessage message={errors.email?.message} />
+              <ErrorMessage message={errors.code?.message} />
             </div>
             <Button type="submit" className="w-full mt-4">
               {isPending ? "Loading" : "Complete Transaction"}

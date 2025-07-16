@@ -1,1 +1,1 @@
-export const BASE_URL = `${process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3000' : 'https://minialdoc-api.withapp.xyz'}/api/v1/`
+export const BASE_URL = `https://317fc5f7c1e3.ngrok-free.app/api/v1/`

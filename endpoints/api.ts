@@ -31,6 +31,6 @@ export const addBankAccount = async (body: BankAccountBody) => {
 }
 
 export const approveInstantSwap = async (body: ApproveInstantSwapBody) => {
-    const { data } = await axiosInstance.post(`users/add_bank_account/${body.slug}`, body);
+    const { data } = await axiosInstance.post(`users/approve_transaction/${body.slug}`, body);
     return data;
 }
