@@ -1,1 +1,1 @@
-export const BASE_URL = `https://317fc5f7c1e3.ngrok-free.app/api/v1/`
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL
