@@ -57,7 +57,7 @@ export function ApproveTransactionForm({ slug, className, ...props }: ApproveTra
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-3">
               <Input
-                type="code"
+                type="password"
                 placeholder="*****"
                 className='text-center'
                 maxLength={4}
